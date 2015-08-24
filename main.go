@@ -1,6 +1,6 @@
 package main
 
-import "copy"
+import "gocopy/copy"
 
 type A struct {
 	Id    int64
