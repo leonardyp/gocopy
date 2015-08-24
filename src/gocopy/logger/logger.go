@@ -13,3 +13,10 @@ func init() {
 	log.EnableFuncCallDepth(true)
 	log.SetLogFuncCallDepth(3)
 }
+func Debug(f string, v ...interface{}) {
+	log.Debug(f, v...)
+}
+
+func Error(f string, v ...interface{}) {
+	log.Error(f, v...)
+}

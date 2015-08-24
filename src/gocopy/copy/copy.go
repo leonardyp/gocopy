@@ -1,13 +1,13 @@
 package copy
 
 import (
-	"logger"
+	"gocopy/logger"
 	"reflect"
 )
 
 var ma, mb = map[string]reflect.Value{}, map[string]reflect.Value{}
 
-func copy(a, b interface{}) {
+func Copy(a, b interface{}) {
 	//todo defer
 	rta := reflect.TypeOf(a).Elem()
 	if rta.Kind() != reflect.Struct {

@@ -1,9 +1,11 @@
 package main
 
+import "gocopy/copy"
+
 type A struct {
 	Id    int64
 	Name  *string
-	sex   bool
+	Sex   bool
 	Uid   int64
 	Info  string
 	Price float32
@@ -11,7 +13,7 @@ type A struct {
 type B struct {
 	Mid  int `cp:"Id"`
 	Name string
-	sex  bool
+	Sex  bool
 }
 
 func main() {
@@ -25,5 +27,5 @@ func main() {
 		Info:  "info...",
 	}
 	b := &B{Mid: 2}
-	copy(a, b)
+	copy.Copy(a, b)
 }
