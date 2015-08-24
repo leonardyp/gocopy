@@ -1,7 +1,7 @@
 package copy
 
 import (
-	"gocopy/logger"
+	"github.com/leonardyp/gocopy/logger"
 	"reflect"
 )
 
