@@ -1,7 +1,7 @@
 package copy
 
 import (
-	"logger"
+	"gocopy/logger"
 	"reflect"
 )
 
