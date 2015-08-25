@@ -67,13 +67,13 @@ func Copy(a, b interface{}) {
 				if ma[k].Kind() == reflect.Ptr {
 
 					if ma[k].Elem().Kind() == reflect.String {
-						mb[old].SetString(ma[k].String())
+						mb[old].SetString(ma[k].Elem().String())
 					}
 					if ma[k].Elem().Kind() == reflect.Bool {
-						mb[old].SetBool(true)
+						mb[old].SetBool(ma[k].Elem().Bool())
 					}
 					if ma[k].Elem().Kind() == reflect.Int {
-						mb[old].SetInt(ma[k].Int())
+						mb[old].SetInt(ma[k].Elem().Int())
 					}
 
 				} else {

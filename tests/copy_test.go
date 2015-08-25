@@ -31,6 +31,7 @@ func TestCopy(t *testing.T) {
 		Sex:   true,
 	}
 	b := &B{Name: "demo"}
+	logger.Debug("before copy :%v:%v:%v", b.Mid, b.Name, b.Sex)
 	gocopy.Copy(a, b)
-	logger.Debug("%#v:%#v", a, b)
+	logger.Debug("after copy :%v:%v:%v", b.Mid, b.Name, b.Sex)
 }
