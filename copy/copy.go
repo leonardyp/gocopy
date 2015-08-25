@@ -1,4 +1,4 @@
-package copy
+package gocopy
 
 import (
 	"github.com/leonardyp/gocopy/logger"
