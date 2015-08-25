@@ -8,7 +8,7 @@ import (
 type A struct {
 	Id    int64
 	Name  *string
-	sex   bool
+	Sex   bool
 	Uid   int64
 	Info  string
 	Price float32
@@ -27,6 +27,7 @@ func TestCopy(t *testing.T) {
 		Uid:   320,
 		Price: 12.3,
 		Info:  "info...",
+		Sex:   true,
 	}
 	b := &B{Name: "demo"}
 	gocopy.Copy(a, b)
