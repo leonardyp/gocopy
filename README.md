@@ -26,4 +26,5 @@
         }
         b := &B{Name: "demo"}
         gocopy.Copy(a, b)
-    }
+    }  
+##result:&tests.B{Mid:112, Name:"100", Sex:false}  
