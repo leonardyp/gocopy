@@ -2,6 +2,7 @@ package tests
 
 import (
 	"github.com/leonardyp/gocopy"
+	"github.com/leonardyp/gocopy/logger"
 	"testing"
 )
 
@@ -31,4 +32,5 @@ func TestCopy(t *testing.T) {
 	}
 	b := &B{Name: "demo"}
 	gocopy.Copy(a, b)
+	logger.Debug("%#v:%#v", a, b)
 }
