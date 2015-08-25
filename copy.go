@@ -1,8 +1,5 @@
-package main
+package gocopy
 
 import (
-  _ "github.com/leonardyp/gocopy/copy"
+	_ "github.com/leonardyp/gocopy/copy"
 )
-func main(){
-	
-}
