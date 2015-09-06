@@ -38,6 +38,7 @@ var colors = []Brush{
 	NewBrush("1;34"), // Informational	blue
 	NewBrush("1;34"), // Debug      blue
 }
+var level int
 
 func magenta(content string) string {
 	return "\033[1;35m" + content + "\033[0m"
@@ -73,15 +74,21 @@ func NewBrush(color string) Brush {
 					file = strings.TrimPrefix(file, gopath+"/src/")
 				}
 			}
-			format = file + ":" + strconv.Itoa(line) + " " + format
+			if level == DEBUG {
+				format = "[" + file + ":" + strconv.Itoa(line) + "] [D] " + format
+			} else if level == ERROR {
+				format = "[" + file + ":" + strconv.Itoa(line) + "] [E] " + format
+			}
 		}
 		return pre + color + "m" + fmt.Sprintf(format, v...) + reset
 	}
 }
 func Debug(format string, v ...interface{}) {
+	level = DEBUG
 	l.Println(colors[DEBUG](format, v...))
 }
 func Error(format string, v ...interface{}) {
+	level = ERROR
 	l.Println(colors[ERROR](format, v...))
 }
 func DebugFunCall(format string, v ...interface{}) {
