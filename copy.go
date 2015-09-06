@@ -8,7 +8,12 @@ import (
 var ma, mb = map[string]reflect.Value{}, map[string]reflect.Value{}
 
 func Copy(a, b interface{}) {
-	//todo defer
+
+	defer func() {
+		if err := recover(); err != nil {
+			logger.Debug("%v", err)
+		}
+	}()
 	rta := reflect.TypeOf(a).Elem()
 	if rta.Kind() != reflect.Struct {
 		panic("request struct accept " + rta.Kind().String())
@@ -44,7 +49,7 @@ func Copy(a, b interface{}) {
 			ma[rta.Field(i).Name] = rva.Field(i)
 
 		default:
-			logger.Debug("%v", v.Type())
+			logger.Debug("type v %v not catch", v.Type())
 		}
 	}
 	var nb = map[string]string{}
@@ -91,5 +96,4 @@ func Copy(a, b interface{}) {
 			}
 		}
 	}
-	logger.Debug("%#v", b)
 }
