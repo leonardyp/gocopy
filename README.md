@@ -16,7 +16,7 @@
     }
     
     func TestCopy(t *testing.T) {
-        var str = "demo"
+        var str = "demoA"
         a := &A{
             Name:  &str,
             Id:    1,
@@ -27,4 +27,4 @@
         b := &B{Name: "demo"}
         gocopy.Copy(a, b)
     }  
-##result:&tests.B{Mid:112, Name:"100", Sex:true}  
+##result:&tests.B{Mid:112, Name:"demoA", Sex:true}  

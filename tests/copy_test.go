@@ -21,7 +21,7 @@ type B struct {
 }
 
 func TestCopy(t *testing.T) {
-	var str = "demo"
+	var str = "demoA"
 	a := &A{
 		Name:  &str,
 		Id:    1,
