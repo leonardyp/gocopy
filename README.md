@@ -1,5 +1,5 @@
 # gocopy
-##简化golang结构体相关拷贝##  
+##简化golang结构体相关拷贝  
 
     type A struct {
         Id    int64
