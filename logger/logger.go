@@ -5,6 +5,8 @@ import (
 	"log"
 	"os"
 	"runtime"
+	"strconv"
+	"strings"
 )
 
 var l *log.Logger
@@ -37,27 +39,56 @@ var colors = []Brush{
 	NewBrush("1;34"), // Debug      blue
 }
 
-type Brush func(string) string
+func magenta(content string) string {
+	return "\033[1;35m" + content + "\033[0m"
+}
+func white(content string) string {
+	return "\033[1;37m" + content + "\033[0m"
+}
+func red(content string) string {
+	return "\033[1;31m" + content + "\033[0m"
+}
+func blue(content string) string {
+	return "\033[1;34m" + content + "\033[0m"
+}
+
+type Brush func(format string, v ...interface{}) string
 
 func NewBrush(color string) Brush {
 	pre := "\033["
 	reset := "\033[0m"
-	return func(text string) string {
-		return pre + color + "m" + text + reset
+	return func(format string, v ...interface{}) string {
+		_, file, line, ok := runtime.Caller(2)
+		if ok {
+			var gopaths []string
+
+			if runtime.GOOS == `darwin` {
+				gopaths = strings.Split(os.Getenv("GOPATH"), ":")
+			}
+			if runtime.GOOS == `windows` {
+				gopaths = strings.Split(os.Getenv("GOPATH"), ";")
+			}
+			for _, gopath := range gopaths {
+				if strings.Contains(file, gopath) {
+					file = strings.TrimPrefix(file, gopath+"/src/")
+				}
+			}
+			format = file + ":" + strconv.Itoa(line) + " " + format
+		}
+		return pre + color + "m" + fmt.Sprintf(format, v...) + reset
 	}
 }
 func Debug(format string, v ...interface{}) {
-	l.Println(colors[DEBUG](fmt.Sprintf(format, v...)))
+	l.Println(colors[DEBUG](format, v...))
 }
 func Error(format string, v ...interface{}) {
-	l.Println(colors[ERROR](fmt.Sprintf(format, v...)))
+	l.Println(colors[ERROR](format, v...))
 }
-func DebugDetail(format string, v ...interface{}) {
-	Debug(format, v...)
+func DebugFunCall(format string, v ...interface{}) {
 	for i := 0; i < DEBUG_DEPTH; i++ {
 		funcName, file, line, ok := runtime.Caller(i)
 		if ok {
-			Debug("frame %v:[func:%v,file:%v,line:%v]\n", i, runtime.FuncForPC(funcName).Name(), file, line)
+			l.Printf(blue("[%v:%v")+magenta(",func:%v]"), file, line, runtime.FuncForPC(funcName).Name())
 		}
 	}
 }
