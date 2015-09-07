@@ -9,12 +9,6 @@ import (
 	"strings"
 )
 
-var l *log.Logger
-
-func init() {
-	l = log.New(os.Stdout, "", log.Ldate|log.Ltime)
-}
-
 const (
 	EMERGENCY = iota
 	ALERT
@@ -38,6 +32,12 @@ var colors = []Brush{
 	NewBrush("1;34"), // Informational	blue
 	NewBrush("1;34"), // Debug      blue
 }
+var destOut = map[string]*log.Logger{}
+
+var (
+	std *log.Logger = log.New(os.Stdout, "", log.Ldate|log.Ltime)
+)
+
 var level int
 
 func magenta(content string) string {
@@ -53,12 +53,12 @@ func blue(content string) string {
 	return "\033[1;34m" + content + "\033[0m"
 }
 
-type Brush func(format string, v ...interface{}) string
+type Brush func(dest, format string, v ...interface{}) string
 
 func NewBrush(color string) Brush {
 	pre := "\033["
 	reset := "\033[0m"
-	return func(format string, v ...interface{}) string {
+	return func(dest, format string, v ...interface{}) string {
 		_, file, line, ok := runtime.Caller(2)
 		if ok {
 			var gopaths []string
@@ -80,22 +80,9 @@ func NewBrush(color string) Brush {
 				format = "[" + file + ":" + strconv.Itoa(line) + "] [E] " + format
 			}
 		}
-		return pre + color + "m" + fmt.Sprintf(format, v...) + reset
-	}
-}
-func Debug(format string, v ...interface{}) {
-	level = DEBUG
-	l.Println(colors[DEBUG](format, v...))
-}
-func Error(format string, v ...interface{}) {
-	level = ERROR
-	l.Println(colors[ERROR](format, v...))
-}
-func DebugFunCall(format string, v ...interface{}) {
-	for i := 0; i < DEBUG_DEPTH; i++ {
-		funcName, file, line, ok := runtime.Caller(i)
-		if ok {
-			l.Printf(blue("[%v:%v")+magenta(",func:%v]"), file, line, runtime.FuncForPC(funcName).Name())
+		if dest == "console" {
+			return pre + color + "m" + fmt.Sprintf(format, v...) + reset
 		}
+		return fmt.Sprintf(format, v...)
 	}
 }
