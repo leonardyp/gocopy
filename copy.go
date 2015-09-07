@@ -11,7 +11,7 @@ func Copy(a, b interface{}) {
 
 	defer func() {
 		if err := recover(); err != nil {
-			logger.Debug("%v", err)
+			logger.StdDebug("%v", err)
 		}
 	}()
 	rta := reflect.TypeOf(a).Elem()
@@ -49,7 +49,7 @@ func Copy(a, b interface{}) {
 			ma[rta.Field(i).Name] = rva.Field(i)
 
 		default:
-			logger.Debug("type v %v not catch", v.Type())
+			logger.StdDebug("type v %v not catch", v.Type())
 		}
 	}
 	var nb = map[string]string{}

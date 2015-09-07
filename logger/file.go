@@ -31,6 +31,24 @@ func (this *FileLogger) DebugFunCall(format string, v ...interface{}) {
 		}
 	}
 }
+func FileDebug(format string, v ...interface{}) {
+	if _, ok := destOut["file"]; !ok {
+		StartFileLogger("")
+	}
+	fl.Debug(format, v...)
+}
+func FileError(format string, v ...interface{}) {
+	if _, ok := destOut["file"]; !ok {
+		StartFileLogger("")
+	}
+	fl.Error(format, v...)
+}
+func FileDebugFunCall(format string, v ...interface{}) {
+	if _, ok := destOut["file"]; !ok {
+		StartFileLogger("")
+	}
+	fl.DebugFunCall(format, v...)
+}
 func (this *FileLogger) Init() error {
 	fd, err := this.createLogFile()
 	if err != nil {

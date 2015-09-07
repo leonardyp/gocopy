@@ -9,6 +9,8 @@ import (
 type ConsoleLogger struct {
 }
 
+var cl = ConsoleLogger{}
+
 func (this *ConsoleLogger) Debug(format string, v ...interface{}) {
 	level = DEBUG
 	std.Println(colors[DEBUG]("console", format, v...))
@@ -24,6 +26,15 @@ func (this *ConsoleLogger) DebugFunCall(format string, v ...interface{}) {
 			std.Printf(blue("[%v:%v")+magenta(",func:%v]"), file, line, runtime.FuncForPC(funcName).Name())
 		}
 	}
+}
+func StdDebug(format string, v ...interface{}) {
+	cl.Debug(format, v...)
+}
+func StdError(format string, v ...interface{}) {
+	cl.Error(format, v...)
+}
+func StdDebugFunCall(format string, v ...interface{}) {
+	cl.DebugFunCall(format, v...)
 }
 func (this *ConsoleLogger) SetLoggerConsole() {
 	if _, ok := destOut["console"]; !ok {
