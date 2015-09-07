@@ -3,6 +3,7 @@ package logger
 import "testing"
 
 func TestFileDebug(t *testing.T) {
+	StartFileLogger("")
 	fl.Debug("%#v:%s", struct {
 		Name  string
 		Money float32
@@ -13,6 +14,7 @@ func TestFileDebug(t *testing.T) {
 }
 
 func TestFileError(t *testing.T) {
+	StartFileLogger("demo.log")
 	fl.Error("%#v:%s", Demo{
 		"leonard",
 		23.4,
@@ -20,6 +22,7 @@ func TestFileError(t *testing.T) {
 }
 
 func TestFileDebugDetail(t *testing.T) {
+	StartFileLogger("log.log")
 	fl.DebugFunCall("%#v:%s", Demo{
 		"leonard",
 		23.4,
